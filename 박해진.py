@@ -7,42 +7,6 @@ Original file is located at
     https://colab.research.google.com/drive/1gvv7F5WUlnaY6qvhKhWWABRf6SGUCiAI
 """
 
-import os
-import shutil
-import zipfile
-
-# 경로 설정 (스크린샷 기반)
-base_dir = '/content/drive/MyDrive/DLProject'
-zip_file_path = os.path.join(base_dir, 'cub2002011.zip') # zip 파일
-extract_to_path = os.path.join(base_dir, 'cub200')        # 압축 풀 위치
-corrupted_dir = os.path.join(extract_to_path, 'CUB_200_2011') # 망가진 폴더
-
-print(f"작업 위치: {extract_to_path}")
-
-# 1. 기존(유실된) 폴더 삭제
-if os.path.exists(corrupted_dir):
-    print(f"기존의 불완전한 폴더를 삭제합니다... (시간이 좀 걸릴 수 있어요)")
-    try:
-        shutil.rmtree(corrupted_dir)
-        print("✅ 기존 폴더 삭제 완료!")
-    except Exception as e:
-        print(f"삭제 중 오류 발생 (무시하고 진행합니다): {e}")
-else:
-    print("기존 폴더가 없네요. 바로 압축 해제로 넘어갑니다.")
-
-# 2. 압축 해제 (구글 서버에서 수행하므로 빠르고 정확함)
-if os.path.exists(zip_file_path):
-    print(f"🚀 압축 해제 시작! ({zip_file_path})")
-    print("1~2분 정도 걸립니다. 잠시만 기다려주세요...")
-
-    with zipfile.ZipFile(zip_file_path, 'r') as zip_ref:
-        zip_ref.extractall(extract_to_path)
-
-    print("✅ 압축 해제 성공! 모든 파일이 복구되었습니다.")
-else:
-    print(f"❌ Zip 파일을 찾을 수 없습니다: {zip_file_path}")
-    print("파일명을 다시 확인해주세요.")
-
 from google.colab import drive
 drive.mount('/content/drive')
 
